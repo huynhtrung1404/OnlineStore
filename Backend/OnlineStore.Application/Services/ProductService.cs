@@ -7,21 +7,19 @@ using OnlineStore.Domain.Entities;
 namespace OnlineStore.Application.Services;
 public class ProductService : IProductService
 {
-    private readonly IGenericRepository<Product> _productRepository;
+    private readonly IOnlineStoreRepository<Product> _productRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public ProductService(IGenericRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper)
-    {
-        _productRepository = productRepository;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+    public ProductService(IOnlineStoreRepository<Product> productRepository,
+        IUnitOfWork unitOfWork,
+        IMapper mapper) =>
+            (_productRepository, _unitOfWork, _mapper) = (productRepository, unitOfWork, mapper);
 
     public async Task<bool> AddProductAsync(ProductDto product)
     {
         await _productRepository.InsertAsync(_mapper.Map<Product>(product));
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitChangesAsync();
         return true;
     }
 
@@ -31,7 +29,7 @@ public class ProductService : IProductService
         if (product is null)
             throw new NullReferenceException("This product is not existing");
         _productRepository.Remove(product);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitChangesAsync();
     }
 
     public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
@@ -43,7 +41,7 @@ public class ProductService : IProductService
     public async Task<bool> UpdateProductAsync(ProductDto product)
     {
         _productRepository.Update(_mapper.Map<Product>(product));
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitChangesAsync();
         return true;
     }
 }

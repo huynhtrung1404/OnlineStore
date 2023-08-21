@@ -10,7 +10,7 @@
   },
   "profiles": {
     "http": {
-      "commandName": "Project",
+      "commandName": "http",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",

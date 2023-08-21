@@ -1,5 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Application.Commons.Interfaces;
+using OnlineStore.Application.Services;
 
 namespace OnlineStore.Application;
 public static class DependencyInjection
@@ -8,6 +10,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddTransient<IProductService, ProductService>();
         return services;
     }
 }

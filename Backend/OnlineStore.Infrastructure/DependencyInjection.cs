@@ -9,9 +9,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<OnlineStoreContext>(option => option.UseSqlServer(config.GetConnectionString("DefaultConnection")));
-        services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddDbContext<OnlineStoreContext>(option =>
+            option.UseSqlServer(config.GetConnectionString("DefaultConnection"),
+            x => x.EnableRetryOnFailure()));
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped(typeof(IOnlineStoreRepository<>), typeof(OnlineStoreRepository<>));
+        services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
         return services;
     }
 }
