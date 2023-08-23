@@ -6,7 +6,6 @@ namespace OnlineStore.Api.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly ISender _sender;
-
     public ProductController(ISender sender)
     {
         _sender = sender;
@@ -15,10 +14,21 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetAllProduct() =>
         Ok(await _sender.Send(new GetAllProductRequest()));
 
-    [HttpPost("AddNewProduct")]
+    [HttpPost("AddNewItem")]
     public async Task<IActionResult> AddNewProduct([FromBody] ProductDto product)
     {
         await _sender.Send(new AddNewProductRequest(product));
+        return Ok();
+    }
+
+    [HttpPut("UpdateItem")]
+    public async Task<IActionResult> UpdateProduct([FromBody] ProductDto product) =>
+        Ok(await _sender.Send(new UpdateProductRequest(product)));
+
+    [HttpDelete("RemoveItem")]
+    public async Task<IActionResult> RemoveProduct(Guid id)
+    {
+        await _sender.Send(new RemoveProductRequest(id));
         return Ok();
     }
 }

@@ -10,7 +10,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddTransient<IProductService, ProductService>();
+        services.AddScoped<IProductService, ProductService>();
         return services;
     }
 }

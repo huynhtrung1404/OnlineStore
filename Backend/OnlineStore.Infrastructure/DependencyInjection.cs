@@ -14,7 +14,7 @@ public static class DependencyInjection
             x => x.EnableRetryOnFailure()));
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped(typeof(IOnlineStoreRepository<>), typeof(OnlineStoreRepository<>));
-        services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
         return services;
     }
 }

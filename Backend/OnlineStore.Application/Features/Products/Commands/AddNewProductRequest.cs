@@ -4,10 +4,9 @@ using OnlineStore.Application.DTOs;
 
 namespace OnlineStore.Application.Features.Products.Commands;
 public record AddNewProductRequest(ProductDto Product) : IRequest
-{
-}
+{ }
 
-public class AddNewProductRequestHandler : IRequestHandler<AddNewProductRequest>
+public sealed class AddNewProductRequestHandler : IRequestHandler<AddNewProductRequest>
 {
     private readonly IProductService _productService;
 

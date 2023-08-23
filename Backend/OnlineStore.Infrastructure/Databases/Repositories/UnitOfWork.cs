@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.Common;
 using OnlineStore.Domain.Commons.Interface;
+using OnlineStore.Infrastructure.Databases.Contexts;
 
 namespace OnlineStore.Infrastructure.Databases.Repositories;
 public class UnitOfWork : IUnitOfWork, IDisposable
@@ -11,7 +12,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private readonly DbContext _dbContext;
     #endregion
 
-    public UnitOfWork(DbContext dbContext)
+    public UnitOfWork(OnlineStoreContext dbContext)
     {
         _dbContext = dbContext;
     }

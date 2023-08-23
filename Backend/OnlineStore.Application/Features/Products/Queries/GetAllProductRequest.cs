@@ -3,12 +3,12 @@ using OnlineStore.Application.Commons.Interfaces;
 using OnlineStore.Application.DTOs;
 
 namespace OnlineStore.Application.Features.Products.Queries;
-public class GetAllProductRequest : IRequest<IEnumerable<ProductDto>>
+public record GetAllProductRequest : IRequest<IEnumerable<ProductDto>>
 {
 
 }
 
-public class GetAllProductRequestHandler : IRequestHandler<GetAllProductRequest, IEnumerable<ProductDto>>
+public sealed class GetAllProductRequestHandler : IRequestHandler<GetAllProductRequest, IEnumerable<ProductDto>>
 {
     private readonly IProductService _productService;
 
