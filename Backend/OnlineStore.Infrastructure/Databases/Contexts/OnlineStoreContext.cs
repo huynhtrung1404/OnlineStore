@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using OnlineStore.Infrastructure.Databases.Configurations;
 using OnlineStore.Infrastructure.Databases.Converters;
 
@@ -21,5 +20,6 @@ public class OnlineStoreContext : DbContext
         builder.HasDefaultSchema("OnlineStore");
         builder.ApplyConfigurationsFromAssembly(typeof(BaseConfiguration<>).Assembly);
     }
+
     public DbSet<Product> Products { get; set; }
 }

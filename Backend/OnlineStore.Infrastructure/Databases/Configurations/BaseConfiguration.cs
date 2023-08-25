@@ -1,3 +1,5 @@
+using OnlineStore.Infrastructure.Databases.Converters;
+
 namespace OnlineStore.Infrastructure.Databases.Configurations;
 public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity<Guid>
 {
@@ -5,8 +7,8 @@ public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEn
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.CreatedDate).ValueGeneratedOnAdd();
-        builder.Property(x => x.UpdatedDate).ValueGeneratedOnUpdate();
+        builder.Property(x => x.CreatedDate).HasConversion<ConvertDateOnly>().HasDefaultValue(DateOnly.FromDateTime(DateTime.UtcNow)).ValueGeneratedOnAdd();
+        builder.Property(x => x.UpdatedDate).HasConversion<ConvertDateOnly>().HasDefaultValue(DateOnly.FromDateTime(DateTime.UtcNow)).ValueGeneratedOnUpdate();
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
     }
 }
