@@ -14,6 +14,9 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetAllProduct() =>
         Ok(await _sender.Send(new GetAllProductRequest()));
 
+    [HttpGet("GetProductById")]
+    public async Task<IActionResult> GetProductById(Guid id) => Ok(await _sender.Send(new GetProductByIdRequest(id)));
+
     [HttpPost("AddNewItem")]
     public async Task<IActionResult> AddNewProduct([FromBody] ProductDto product)
     {

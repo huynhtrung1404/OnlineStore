@@ -1,6 +1,5 @@
 using AutoMapper;
 using OnlineStore.Application.Commons.Interfaces;
-using OnlineStore.Application.DTOs;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
@@ -36,6 +35,12 @@ public class ProductService : IProductService
     {
         var result = await _productRepository.GetAllAsync();
         return _mapper.Map<IEnumerable<ProductDto>>(result);
+    }
+
+    public async Task<ProductDto> GetProductByIdAsync(Guid id)
+    {
+        var result = await _productRepository.GetByIdAsync(id);
+        return _mapper.Map<ProductDto>(result);
     }
 
     public async Task<bool> UpdateProductAsync(ProductDto product)
