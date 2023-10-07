@@ -3,42 +3,37 @@ using System.Text.Json;
 using OnlineStore.Web.Services.Interfaces;
 
 namespace OnlineStore.Web.Services;
-public class ApiService<T> : IApiService<T> where T : class, new()
+public class ApiService : IApiService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _onlineStoreClient;
     private readonly JsonSerializerOptions _options;
 
-    public ApiService(HttpClient httpClient)
+    public ApiService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _onlineStoreClient = httpClientFactory.CreateClient("OnlineStore");
         _options = new() { PropertyNameCaseInsensitive = true };
     }
 
-    public async Task<T> GetAsync(string path, params string[] allParam)
+    public async Task<T> GetAsync<T>(string path)
     {
-        var urlPath = new StringBuilder(path);
-        foreach (var param in allParam)
-        {
-            urlPath.Append(param);
-        }
-        var response = await _httpClient.GetAsync(urlPath.ToString());
+        var response = await _onlineStoreClient.GetAsync(path.ToString());
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
             throw new ApplicationException($"{response.StatusCode} - {response.Content}");
-        return JsonSerializer.Deserialize<T>(content, _options) ?? new T();
+        return JsonSerializer.Deserialize<T>(content, _options)!;
     }
 
-    public Task<bool> PostAsync<TBody>(string path, TBody body, params string[] param)
+    public Task<bool> PostAsync<TBody>(string path, TBody body)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> PutAsync<TBody>(string path, TBody body, params string[] param)
+    public Task<bool> PutAsync<TBody>(string path, TBody body)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> RemoveAsync(string path, params string[] param)
+    public Task<bool> RemoveAsync(string path)
     {
         throw new NotImplementedException();
     }

@@ -49,6 +49,6 @@
 @code {
     protected async override Task OnInitializedAsync()
     {
-        products = await _httpClient.GetAsync("getallproduct");
+        products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("getallproduct");
     }
 }

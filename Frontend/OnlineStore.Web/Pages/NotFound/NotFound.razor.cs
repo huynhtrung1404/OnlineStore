@@ -4,7 +4,7 @@ namespace OnlineStore.Web.Pages.NotFound;
 public partial class NotFound
 {
     [Inject]
-    public NavigationManager NavigationManager { get; set; }
+    public required NavigationManager NavigationManager { get; set; }
     public void NavigationToHome()
     {
         NavigationManager.NavigateTo("/");
