@@ -1,0 +1,24 @@
+@page "/addproduct";
+@using OnlineStore.Web.Pages.Product
+@using OnlineStore.Web.ViewModels
+<PageTitle>Add New Product</PageTitle>
+
+<div class="container">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Please input name">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea type="text" class="form-control" id="description" placeholder="Input the description"
+            maxlength="200"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" placeholder="Please input the price">
+    </div>
+    <div class="form-group">
+        <label for="stockUnit">Stock Unit</label>
+        <input type="number" class="form-control" id="stockUnit" placeholder="Please input the stock unit">
+    </div>
+</div>

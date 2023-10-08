@@ -1,14 +1,11 @@
+using Microsoft.AspNetCore.Components;
 using OnlineStore.Web.Services.Interfaces;
 using OnlineStore.Web.ViewModels;
 
 namespace OnlineStore.Web.Pages.Product;
 public partial class ListProduct
 {
-    private readonly IApiService _apiService;
-    public ListProduct(IApiService apiService)
-    {
-        _apiService = apiService;
-    }
+    [Inject] IApiService? _apiService { get; set; }
 
     private IEnumerable<ProductViewModel> products = new List<ProductViewModel>();
 }

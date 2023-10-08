@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using OnlineStore.Web.Services.Interfaces;
@@ -23,14 +25,24 @@ public class ApiService : IApiService
         return JsonSerializer.Deserialize<T>(content, _options)!;
     }
 
-    public Task<bool> PostAsync<TBody>(string path, TBody body)
+    public async Task<bool> PostAsync<TBody>(string path, TBody body)
     {
-        throw new NotImplementedException();
+        var content = JsonSerializer.Serialize(body, _options);
+        var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
+        var response = await _onlineStoreClient.PostAsync(path, data);
+        if (!response.IsSuccessStatusCode)
+            throw new ApplicationException($"{response.StatusCode} - {response.Content}");
+        return response.StatusCode.Equals(HttpStatusCode.OK);
     }
 
-    public Task<bool> PutAsync<TBody>(string path, TBody body)
+    public async Task<bool> PutAsync<TBody>(string path, TBody body)
     {
-        throw new NotImplementedException();
+        var content = JsonSerializer.Serialize(body, _options);
+        var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
+        var response = await _onlineStoreClient.PostAsync(path, data);
+        if (!response.IsSuccessStatusCode)
+            throw new ApplicationException($"{response.StatusCode} - {response.Content}");
+        return response.StatusCode.Equals(HttpStatusCode.OK);
     }
 
     public Task<bool> RemoveAsync(string path)

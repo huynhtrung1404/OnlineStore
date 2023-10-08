@@ -3,52 +3,76 @@
 @using OnlineStore.Web.ViewModels
 @using System.Text.Json
 <PageTitle>List Product</PageTitle>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">
-                Id
-            </th>
-            <th scope="col">
-                Name
-            </th>
-            <th scope="col">
-                Description
-            </th>
-            <th scope="col">
-                Created Date
-            </th>
-            <th scope="col">
-                Updated Date
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in @products)
-        {
-            <tr>
-                <td>
-                    @item.Id
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Description
-                </td>
-                <td>
-                    @item.CreatedDate
-                </td>
-                <td>
-                    @item.UpdatedDate
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@if (!products.Any())
+{
+    <p>No record found</p>
+}
+else
+{
+    <div class="container">
+        <div class="header">
+            <p>Add new item</p>
+            <a type="button" class="btn btn-danger">Add New Item</a>
+        </div>
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">
+                        Id
+                    </th>
+                    <th scope="col">
+                        Name
+                    </th>
+                    <th scope="col">
+                        Description
+                    </th>
+                    <th scope="col">
+                        Created Date
+                    </th>
+                    <th scope="col">
+                        Updated Date
+                    </th>
+                    <th scope="col">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var item in @products)
+                {
+                    <tr>
+                        <td>
+                            @item.Id
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.CreatedDate
+                        </td>
+                        <td>
+                            @item.UpdatedDate
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary pr-2">Update</button>
+                            <button type="button" class="btn btn-secondary">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 @code {
     protected async override Task OnInitializedAsync()
     {
-        products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("getallproduct");
+        if (_apiService is not null)
+        {
+
+            products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("getallproduct");
+        }
     }
 }

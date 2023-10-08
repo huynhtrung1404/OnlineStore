@@ -11,7 +11,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IApiService, ApiService>();
 builder.Services.AddHttpClient("OnlineStore", conf =>
 {
-    conf.BaseAddress = new Uri("https://localhost:5001");
+    conf.BaseAddress = new Uri("https://localhost:6002");
 });
 
 await builder.Build().RunAsync();
