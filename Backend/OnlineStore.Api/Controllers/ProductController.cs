@@ -3,6 +3,7 @@ using OnlineStore.Application.Features.Products.Commands;
 using OnlineStore.Application.Features.Products.Queries;
 
 namespace OnlineStore.Api.Controllers;
+[Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
     private readonly ISender _sender;
