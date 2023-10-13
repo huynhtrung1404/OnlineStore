@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\onlinestore.infrastructure\OnlineStore.Infrastructure.csproj" />
-    <ProjectReference Include="..\onlinestore.application\OnlineStore.Application.csproj" />
+    <ProjectReference Include="..\OnlineStore.Infrastructure\OnlineStore.Infrastructure.csproj" />
+    <ProjectReference Include="..\OnlineStore.Application\OnlineStore.Application.csproj" />
   </ItemGroup>
 
 </Project>

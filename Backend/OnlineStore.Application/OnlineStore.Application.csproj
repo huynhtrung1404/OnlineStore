@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\onlinestore.domain\OnlineStore.Domain.csproj" />
+    <ProjectReference Include="..\OnlineStore.Domain\OnlineStore.Domain.csproj" />
+    <ProjectReference Include="..\OnlineStore.Shared.Common\OnlineStore.Shared.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

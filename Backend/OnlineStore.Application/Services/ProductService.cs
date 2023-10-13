@@ -1,5 +1,4 @@
 using AutoMapper;
-using OnlineStore.Application.Commons.Interfaces;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
@@ -26,7 +25,7 @@ public class ProductService : IProductService
     {
         var product = await _productRepository.GetByIdAsync(id);
         if (product is null)
-            throw new NullReferenceException("This product is not existing");
+            throw new NullReferenceException(ErrorMessage.NotFoundData);
         _productRepository.Remove(product);
         await _unitOfWork.CommitChangesAsync();
     }
