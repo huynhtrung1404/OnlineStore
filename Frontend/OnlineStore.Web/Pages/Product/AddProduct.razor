@@ -1,26 +1,38 @@
 @page "/addproduct";
 @using OnlineStore.Web.Pages.Product
 @using OnlineStore.Web.ViewModels
+@using OnlineStore.Web.Models
+@using Services.Interfaces
+
 <PageTitle>Add New Product</PageTitle>
 
-<div class="container">
-    <h1 class="mb-4 text-center">Add new product</h1>
-    <div class="form-group mb-2">
-        <label for="name">Name</label>
-        <input type="text" class="form-control w-50" id="name" placeholder="Please input name">
-    </div>
-    <div class="form-group mb-2">
-        <label for="description">Description</label>
-        <textarea type="text" class="form-control w-50" id="description" placeholder="Input the description"
-            maxlength="200"></textarea>
-    </div>
-    <div class="form-group mb-2">
-        <label for="price">Price</label>
-        <input type="number" class="form-control w-50" id="price" placeholder="Please input the price">
-    </div>
-    <div class="form-group">
-        <label for="stockUnit">Stock Unit</label>
-        <input type="number" class="form-control w-50" id="stockUnit" placeholder="Please input the stock unit">
-    </div>
-    <button type="button" class="btn btn-primary">Add</button>
+<h1 class="mb-4">Add new product</h1>
+<div class="form-group mb-2">
+    <label for="name">Name</label>
+    <input type="text" class="form-control w-50" id="name" placeholder="Please input name" @bind="ProductModel.Name">
+    <p>@ProductModel.Name</p>
 </div>
+<div class="form-group mb-2">
+    <label for="description">Description</label>
+    <textarea type="text" class="form-control w-50" id="description" placeholder="Input the description" maxlength="200"
+        @bind="ProductModel.Description"></textarea>
+</div>
+<div class="form-group mb-2">
+    <label for="price">Price</label>
+    <input type="number" class="form-control w-50" id="price" @bind="ProductModel.Price"
+        placeholder="Please input the price">
+</div>
+<div class="form-group">
+    <label for="stockUnit">Stock Unit</label>
+    <input type="number" class="form-control w-50" id="stockUnit" @bind="ProductModel.StockUnit"
+        placeholder="Please input the stock unit">
+</div>
+<button type="button" class="btn btn-primary mt-2">Add</button>
+
+@code {
+    [Inject] IApiService? _apiService { get; set; }
+    private ProductModel ProductModel { get; set; } = new ProductModel();
+    private async Task AddProductAsync()
+    {
+    }
+}

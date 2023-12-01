@@ -12,5 +12,6 @@ public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEn
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
         builder.Property(x => x.CreatedBy).HasMaxLength(255);
         builder.Property(x => x.UpdatedBy).HasMaxLength(255);
+        builder.Property(x => x.Version).IsRowVersion();
     }
 }

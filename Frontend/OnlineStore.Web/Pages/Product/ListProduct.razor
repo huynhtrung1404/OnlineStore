@@ -64,7 +64,7 @@
     {
         if (_apiService is not null)
         {
-            products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("getallproduct");
+            products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("api/product/getallproduct");
         }
     }
 }
