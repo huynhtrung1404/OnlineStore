@@ -1,4 +1,4 @@
-@page "/listproduct"
+@page "/listProduct"
 @using OnlineStore.Web.Pages.Product
 @using OnlineStore.Web.ViewModels
 @using System.Text.Json
@@ -45,10 +45,10 @@
                         @item.Description
                     </td>
                     <td>
-                        @item.CreatedDate
+                        @ShowDate(item.CreatedDate)
                     </td>
                     <td>
-                        @item.UpdatedDate
+                        @ShowDate(item.UpdatedDate)
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary pr-2">Update</button>
@@ -66,5 +66,12 @@
         {
             products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("api/product/getallproduct");
         }
+    }
+
+    private string ShowDate(DateOnly? date)
+    {
+        if (!date.HasValue || date == DateOnly.MinValue)
+            return string.Empty;
+        return date.Value.ToString();
     }
 }

@@ -3,6 +3,8 @@
 @using OnlineStore.Web.ViewModels
 @using OnlineStore.Web.Models
 @using Services.Interfaces
+@inject NavigationManager NavigationManager
+@inject IApiService _apiService
 
 <PageTitle>Add New Product</PageTitle>
 
@@ -27,12 +29,14 @@
     <input type="number" class="form-control w-50" id="stockUnit" @bind="ProductModel.StockUnit"
         placeholder="Please input the stock unit">
 </div>
-<button type="button" class="btn btn-primary mt-2">Add</button>
+<button type="button" class="btn btn-primary mt-2" @onclick="AddProductAsync">Add</button>
 
 @code {
-    [Inject] IApiService? _apiService { get; set; }
     private ProductModel ProductModel { get; set; } = new ProductModel();
     private async Task AddProductAsync()
     {
+        var result = await _apiService.PostAsync("api/product/AddNewItem", ProductModel);
+        if (result)
+            NavigationManager.NavigateTo("/listProduct");
     }
 }
