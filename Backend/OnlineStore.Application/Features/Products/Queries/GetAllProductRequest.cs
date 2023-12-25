@@ -1,7 +1,3 @@
-using MediatR;
-using OnlineStore.Application.Commons.Interfaces;
-using OnlineStore.Application.DTOs;
-
 namespace OnlineStore.Application.Features.Products.Queries;
 public record GetAllProductRequest : IRequest<IEnumerable<ProductDto>>
 {

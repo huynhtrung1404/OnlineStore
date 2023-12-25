@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace OnlineStore.Domain.Commons;
 public class BaseEntity<T>
 {
@@ -7,4 +9,6 @@ public class BaseEntity<T>
     public string? CreatedBy { get; set; }
     public DateOnly? UpdatedDate { get; set; }
     public string? UpdatedBy { get; set; }
+    [Timestamp]
+    public byte[]? Version { get; set; }
 }

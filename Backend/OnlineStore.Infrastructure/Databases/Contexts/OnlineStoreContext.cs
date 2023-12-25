@@ -20,6 +20,4 @@ public class OnlineStoreContext : DbContext
         builder.HasDefaultSchema("OnlineStore");
         builder.ApplyConfigurationsFromAssembly(typeof(BaseConfiguration<>).Assembly);
     }
-
-    public DbSet<Product> Products { get; set; }
 }

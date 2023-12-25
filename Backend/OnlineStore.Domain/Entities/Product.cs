@@ -7,4 +7,5 @@ public class Product : BaseEntity<Guid>
     public long StockUnit { get; set; }
     public bool IsSales { get; set; }
     public long QuantitySold { get; set; }
+    public IList<Category> Categories { get; } = new List<Category>();
 }
