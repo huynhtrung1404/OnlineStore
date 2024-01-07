@@ -6,9 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: ls
       - name: Setup dotnet 7
         uses: action/setup-dotnet@v3
         with:
           dotnet-version: "7.0.x"
-      - run: dotnet build Backend\OnlineStore.Api
+      - run: dotnet build
+        working-directory: Backend
