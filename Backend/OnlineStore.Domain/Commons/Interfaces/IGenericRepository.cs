@@ -1,3 +1,5 @@
+using OnlineStore.Domain.Interfaces;
+
 namespace OnlineStore.Domain.Commons.Interface;
 public interface IGenericRepository<T> where T : class
 {
@@ -10,4 +12,6 @@ public interface IGenericRepository<T> where T : class
     void RemoveRange(T entities);
     Task<IEnumerable<T>> GetAllAsync();
     Task<T?> GetByIdAsync(Guid id);
+    Task<IEnumerable<T>> GetListAsync(ISpecification<T> specification);
+    Task<T?> GetItemAsync(ISpecification<T> specification);
 }

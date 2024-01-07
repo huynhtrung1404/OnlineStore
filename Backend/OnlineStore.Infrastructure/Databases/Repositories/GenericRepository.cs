@@ -1,4 +1,7 @@
+using OnlineStore.Application.Commons.Interfaces;
 using OnlineStore.Domain.Commons.Interface;
+using OnlineStore.Domain.Interfaces;
+using OnlineStore.Infrastructure.Specifications;
 
 namespace OnlineStore.Infrastructure.Databases.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -19,6 +22,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await _context.Set<T>().ToListAsync();
+    }
+
+    public async Task<IEnumerable<T>> GetListAsync(ISpecification<T> specification)
+    {
+        return await Evaluation<T>.GetQueryAsync(dbSet, specification);
+    }
+
+    public async Task<T?> GetItemAsync(ISpecification<T> specification)
+    {
+        return await Evaluation<T>.GetQueryItemAsync(dbSet, specification);
     }
 
     public T? GetById(Guid id)
