@@ -3,14 +3,12 @@ using OnlineStore.Application.Features.Products.Commands;
 using OnlineStore.Application.Features.Products.Queries;
 
 namespace OnlineStore.Api.Controllers;
-[Route("api/[controller]")]
-public class ProductController : ControllerBase
+public class ProductController : BaseController
 {
-    private readonly ISender _sender;
-    public ProductController(ISender sender)
+    public ProductController(ISender sender) : base(sender)
     {
-        _sender = sender;
     }
+
     [HttpGet("GetAllProduct")]
     public async Task<IActionResult> GetAllProduct() =>
         Ok(await _sender.Send(new GetAllProductRequest()));

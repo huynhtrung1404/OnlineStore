@@ -17,7 +17,7 @@ public class OnlineStoreContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.HasDefaultSchema("OnlineStore");
+        builder.HasDefaultSchema(DefaultSchemas.OnlineStore);
         builder.ApplyConfigurationsFromAssembly(typeof(BaseConfiguration<>).Assembly);
     }
 }
