@@ -20,7 +20,7 @@ jobs:
         name: Publish project OnlineStore.Api
         working-directory: Backend
       - name: Upload WebApp1 Build Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: OnlineStore
           path: /home/runner/work/OnlineStore/OnlineStore/Backend/OnlineStore.Api/bin/Release/net7.0/publish/
