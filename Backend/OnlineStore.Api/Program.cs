@@ -12,7 +12,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddCors(option =>
 {
-    option.AddPolicy("EnabledCors", x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    option.AddDefaultPolicy(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
 var app = builder.Build();
 
@@ -25,7 +25,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 
 app.UseHttpsRedirection();
 
-app.UseCors("EnabledCors");
+app.UseCors();
 
 app.UseAuthorization();
 
