@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: ls
       - name: Setup dotnet 7
         uses: action/setup-dotnet@v3
         with:
