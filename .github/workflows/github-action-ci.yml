@@ -1,5 +1,5 @@
 name: online-store-ci
-run-name: ${{github.actor}}
+run-name: ${{github.actor}}-${{github.action}}-${{github.event.repository.updated_at}}
 on: [push]
 jobs:
   build:
@@ -11,6 +11,8 @@ jobs:
         with:
           dotnet-version: 7.0.x
       - run: dotnet build
+        name: Build Project
         working-directory: Backend
       - run: dotnet publish --configuration Release OnlineStore.Api
+        name: Publish project OnlineStore.Api
         working-directory: Backend
