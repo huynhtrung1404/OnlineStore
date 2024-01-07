@@ -6,7 +6,7 @@ public interface IGenericRepository<T> where T : class
     IEnumerable<T> GetAll();
     T? GetById(Guid id);
     Task InsertAsync(T entity);
-    Task InsertMany(IEnumerable<T> entities);
+    Task InsertManyAsync(IEnumerable<T> entities);
     void Update(T entity);
     void Remove(T entity);
     void RemoveRange(T entities);
