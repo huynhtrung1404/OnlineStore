@@ -1,6 +1,5 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using OnlineStore.Application.Commons.Interfaces;
 using OnlineStore.Application.Services;
 
 namespace OnlineStore.Application;
