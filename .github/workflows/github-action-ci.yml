@@ -12,3 +12,5 @@ jobs:
           dotnet-version: 7.0.x
       - run: dotnet build
         working-directory: Backend
+      - run: dotnet publish --configuration Release OnlineStore.Api
+        working-directory: Backend
