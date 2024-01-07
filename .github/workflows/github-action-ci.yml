@@ -1,0 +1,12 @@
+name: online-store-ci
+run-name: ${{github.actor}}
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet 7
+        uses: action/setup-dotnet@v3
+        with:
+          dotnet-version: "7.0.x"
