@@ -1,5 +1,3 @@
-using OnlineStore.Application.DTOs;
-
 namespace OnlineStore.Application.Commons.Interfaces;
 public interface IProductService
 {

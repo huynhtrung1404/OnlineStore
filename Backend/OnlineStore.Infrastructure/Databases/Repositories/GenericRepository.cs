@@ -1,4 +1,6 @@
 using OnlineStore.Domain.Commons.Interface;
+using OnlineStore.Domain.Interfaces;
+using OnlineStore.Infrastructure.Specifications;
 
 namespace OnlineStore.Infrastructure.Databases.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -21,14 +23,24 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
+    public async Task<IEnumerable<T>> GetListAsync(ISpecification<T> specification)
+    {
+        return await Evaluation<T>.GetQueryAsync(dbSet, specification);
+    }
+
+    public async Task<T?> GetItemAsync(ISpecification<T> specification)
+    {
+        return await Evaluation<T>.GetQueryItemAsync(dbSet, specification);
+    }
+
     public T? GetById(Guid id)
     {
-        return _context.Set<T>().Find(id);
+        return dbSet.Find(id);
     }
 
     public async Task<T?> GetByIdAsync(Guid id)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return await dbSet.FindAsync(id);
     }
 
     public async Task InsertAsync(T entity)
@@ -36,7 +48,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await dbSet.AddAsync(entity);
     }
 
-    public async Task InsertMany(IEnumerable<T> entities)
+    public async Task InsertManyAsync(IEnumerable<T> entities)
     {
         await dbSet.AddRangeAsync(entities);
     }
