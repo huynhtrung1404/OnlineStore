@@ -1,6 +1,6 @@
 # OnlineStore
 
-This project is an example ASP.Net Core application based on EShopOnWeb. It includes DDD and some popular design patterns (Repository, unit of work, etc.).
+This project is an example ASP.Net Core application based on EShopOnWeb idea. It includes DDD and some popular design patterns (Repository, unit of work, etc.).
 
 ## Introduction
 
