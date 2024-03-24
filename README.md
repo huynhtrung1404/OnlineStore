@@ -1,7 +1,8 @@
 # OnlineStore
 
 This project is an example ASP.Net Core application based on EShopOnWeb idea. It includes DDD and some popular design patterns (Repository, unit of work, etc.).
-[https://github.com/huynhtrung1404/OnlineStore/actions/workflows/github-action-ci.yml/badge.svg]
+
+[Build Workflow](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/github-action-ci.yml/badge.svg)
 
 ## Introduction
 
