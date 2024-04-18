@@ -1,12 +1,11 @@
-@page "/listProduct"
-@using OnlineStore.Web.Pages.Product
-@using OnlineStore.Web.ViewModels
-@using System.Text.Json
-<PageTitle>List Product</PageTitle>
+@page "/Categories"
+@using OnlineStore.Web.ViewModels;
+@using OnlineStore.Web.Services.Interfaces;
+<PageTitle>Categories</PageTitle>
 <div class="container">
     <div class="header">
         <h1>Add new item</h1>
-        <a href="/addproduct" class="btn btn-danger">Add</a>
+        <a href="/addCategory" class="btn btn-danger">Add New Item</a>
     </div>
     <table class="table">
         <thead class="text-center">
@@ -32,7 +31,7 @@
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach (var item in @products)
+            @foreach (var item in @categories)
             {
                 <tr>
                     <td>
@@ -60,11 +59,15 @@
     </table>
 </div>
 @code {
+    [Inject] IApiService? _apiService { get; set; }
+
+    private IEnumerable<CategoryViewModel> categories = new List<CategoryViewModel>();
     protected async override Task OnInitializedAsync()
     {
         if (_apiService is not null)
         {
-            products = await _apiService.GetAsync<IEnumerable<ProductViewModel>>("api/product/getallproduct");
+            var data = await _apiService.GetAsync<ResponseListViewModel<CategoryViewModel>>("api/Category/getall?pageSize=50&pageNumber=1");
+            categories = data.Response;
         }
     }
 

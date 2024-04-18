@@ -9,4 +9,5 @@ public class CategoryDto
     public DateOnly UpdatedDate { get; set; }
     public string? CreatedBy { get; set; }
     public string? UpdatedBy { get; set; }
+    public bool IsEnabled { get; set;}
 }

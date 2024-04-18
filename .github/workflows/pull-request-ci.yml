@@ -1,4 +1,4 @@
-name: pull-request-ci
+name: Pull Request Trigger
 run-name: Run Pull Request ${{github.event.pull_request.title}}
 on:
   pull_request:
