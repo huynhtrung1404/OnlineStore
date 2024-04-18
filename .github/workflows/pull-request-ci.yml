@@ -28,8 +28,8 @@ jobs:
         with:
           projectBaseDir: Backend/
           args: >
-            -Dsonar.organization=huynhtrung1404
-            -Dsonar.projectKey=huynhtrung1404_OnlineStore
+            -Dsonar.organization=${{secrets.ORG}}
+            -Dsonar.projectKey=${{secrets.PROJ_KEY}}
 
       - run: dotnet publish --configuration Release OnlineStore.Api
         name: Publish project OnlineStore.Api
