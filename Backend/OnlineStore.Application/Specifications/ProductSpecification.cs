@@ -11,4 +11,10 @@ public class ProductSpecification : BaseSpecification<Product>
     public ProductSpecification(string productName) : base(x => x.Name.Contains(productName))
     {
     }
+
+    public ProductSpecification(long pageSize, long pageNumber) : base(x => x.StockUnit > 0)
+    {
+        ApplyPaging(pageSize, pageNumber);
+        ApplyOrderBy(x => x.CreatedDateTime);
+    }
 }

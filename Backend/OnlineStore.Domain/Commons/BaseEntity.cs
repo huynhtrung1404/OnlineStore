@@ -11,4 +11,5 @@ public class BaseEntity<T>
     public string? UpdatedBy { get; set; }
     [Timestamp]
     public byte[]? Version { get; set; }
+    public DateTime CreatedDateTime { get; set; }
 }

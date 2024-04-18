@@ -1,6 +1,10 @@
-name: online-store-ci
-run-name: ${{github.actor}}-${{github.action}}-${{github.event.repository.updated_at}}
-on: [push]
+name: pull-request-ci
+run-name: Run Pull Request ${{github.event.pull_request.title}}
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +20,17 @@ jobs:
       - run: dotnet build --configuration Release --no-restore
         name: Build Project
         working-directory: Backend
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: Backend/
+          args: >
+            -Dsonar.organization=${{secrets.ORG}}
+            -Dsonar.projectKey=${{secrets.PROJ_KEY}}
+
       - run: dotnet publish --configuration Release OnlineStore.Api
         name: Publish project OnlineStore.Api
         working-directory: Backend

@@ -4,6 +4,8 @@ This project is an example ASP.Net Core application based on EShopOnWeb idea. It
 
 [Build Workflow](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/github-action-ci.yml/badge.svg)
 
+[![pull-request-ci](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/pull-request-ci.yml/badge.svg)](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/pull-request-ci.yml)
+
 ## Introduction
 
 This project was created to help me learn about C#, ASP.Net Core, Entity Framework Core, and more.

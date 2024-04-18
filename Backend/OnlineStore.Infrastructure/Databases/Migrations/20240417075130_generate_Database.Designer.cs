@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Infrastructure.Databases.Contexts;
 
@@ -11,9 +12,11 @@ using OnlineStore.Infrastructure.Databases.Contexts;
 namespace OnlineStore.Infrastructure.Databases.Migrations
 {
     [DbContext(typeof(OnlineStoreContext))]
-    partial class OnlineStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240417075130_generate_Database")]
+    partial class generate_Database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,18 +48,10 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 3, 11, 28, 108, DateTimeKind.Utc).AddTicks(5100));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -66,20 +61,16 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TagName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasColumnType("datetime2");
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -88,7 +79,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", "OnlineStore");
+                    b.ToTable("Category", "OnlineStore");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Product", b =>
@@ -107,12 +98,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 3, 11, 28, 108, DateTimeKind.Utc).AddTicks(9336));
+                        .HasDefaultValue(new DateTime(2024, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -143,7 +129,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()

@@ -67,4 +67,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         dbSet.Update(entity);
     }
+
+    public async Task<long> CountAsync(ISpecification<T> specification) =>
+        await Evaluation<T>.CountAsync(dbSet, specification);
 }
