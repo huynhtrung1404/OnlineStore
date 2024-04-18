@@ -12,8 +12,8 @@ using OnlineStore.Infrastructure.Databases.Contexts;
 namespace OnlineStore.Infrastructure.Databases.Migrations
 {
     [DbContext(typeof(OnlineStoreContext))]
-    [Migration("20231201072813_generate_Database")]
-    partial class generate_Database
+    [Migration("20240417151941_add_Field_DateTime")]
+    partial class add_Field_DateTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -98,7 +101,12 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 17, 15, 19, 41, 18, DateTimeKind.Utc).AddTicks(9216));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -129,7 +137,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()

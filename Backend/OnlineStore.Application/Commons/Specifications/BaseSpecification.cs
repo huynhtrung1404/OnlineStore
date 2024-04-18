@@ -15,8 +15,8 @@ public class BaseSpecification<T> : ISpecification<T> where T : class
     public Expression<Func<T, object>> OrderByDescending { get; private set; } = default!;
     public Expression<Func<T, object>> GroupBy { get; private set; } = default!;
 
-    public int PageSize { get; private set; }
-    public int CurrentPage { get; private set; } = 1;
+    public long PageSize { get; private set; }
+    public long CurrentPage { get; private set; } = 1;
     public bool IsPagingEnabled { get; private set; } = false;
 
     protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
@@ -28,7 +28,7 @@ public class BaseSpecification<T> : ISpecification<T> where T : class
     {
         IncludeStrings.Add(includeString);
     }
-    protected virtual void ApplyPaging(int currentPage, int pageSize)
+    protected virtual void ApplyPaging(long currentPage, long pageSize)
     {
         CurrentPage = currentPage;
         PageSize = pageSize;

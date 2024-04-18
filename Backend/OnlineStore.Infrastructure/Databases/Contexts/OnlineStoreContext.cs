@@ -15,9 +15,9 @@ public class OnlineStoreContext : DbContext
         configurationBuilder.Properties<DateOnly>()
             .HaveConversion<ConvertDateOnly>();
     }
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.HasDefaultSchema(DefaultSchemas.OnlineStore);
-        builder.ApplyConfigurationsFromAssembly(typeof(BaseConfiguration<>).Assembly);
+        modelBuilder.HasDefaultSchema(DefaultSchemas.OnlineStore);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseConfiguration<>).Assembly);
     }
 }

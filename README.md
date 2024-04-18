@@ -2,6 +2,8 @@
 
 This project is an example ASP.Net Core application based on EShopOnWeb. It includes DDD and some popular design patterns (Repository, unit of work, etc.).
 
+[![pull-request-ci](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/pull-request-ci.yml/badge.svg)](https://github.com/huynhtrung1404/OnlineStore/actions/workflows/pull-request-ci.yml)
+
 ## Introduction
 
 This project was created to help me learn about C#, ASP.Net Core, Entity Framework Core, and more.

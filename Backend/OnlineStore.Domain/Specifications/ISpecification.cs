@@ -10,8 +10,8 @@ public interface ISpecification<T>
     Expression<Func<T, object>> OrderByDescending { get; }
     Expression<Func<T, object>> GroupBy { get; }
 
-    int PageSize { get; }
+    long PageSize { get; }
 
-    int CurrentPage { get; }
+    long CurrentPage { get; }
     bool IsPagingEnabled { get; }
 }

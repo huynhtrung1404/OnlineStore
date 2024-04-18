@@ -1,4 +1,5 @@
 using AutoMapper;
+using OnlineStore.Application.Specification;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
@@ -33,6 +34,12 @@ public class ProductService : IProductService
     public async Task<IEnumerable<ProductDto>> GetAllProductAsync()
     {
         var result = await _productRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ProductDto>>(result);
+    }
+
+    public async Task<IEnumerable<ProductDto>> GetAllProductAsync(long pageSize, long pageNumber)
+    {
+        var result = await _productRepository.GetListAsync(new ProductSpecification(pageSize, pageNumber));
         return _mapper.Map<IEnumerable<ProductDto>>(result);
     }
 

@@ -14,4 +14,5 @@ public interface IGenericRepository<T> where T : class
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> GetListAsync(ISpecification<T> specification);
     Task<T?> GetItemAsync(ISpecification<T> specification);
+    Task<long> CountAsync(ISpecification<T> specification);
 }
