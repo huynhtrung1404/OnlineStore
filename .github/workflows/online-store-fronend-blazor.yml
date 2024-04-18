@@ -1,12 +1,11 @@
 name: Online Store Frontend Build
-run-name: Build Frontend by @${{ github.actor }}
+run-name: Build UI Blazor by @${{ github.actor }}
 on:
   push:
     branches:
       - main
       - develop
       - release
-      - feature/**
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -33,5 +32,5 @@ jobs:
       - name: Upload OnlineStore Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: OnlineStore
+          name: OnlineStore.Web
           path: /home/runner/work/OnlineStore/OnlineStore/Frontend/OnlineStore.Web/bin/Release/net8.0/publish/
