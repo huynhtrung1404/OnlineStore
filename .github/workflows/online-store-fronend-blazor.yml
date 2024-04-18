@@ -1,5 +1,5 @@
-name: Online Store Backend Build
-run-name: Build main by @${{ github.actor }}
+name: Online Store Frontend Build
+run-name: Build Frontend by @${{ github.actor }}
 on:
   push:
     branches:
