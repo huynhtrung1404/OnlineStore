@@ -1,5 +1,6 @@
 using AutoMapper;
 using OnlineStore.Domain.Entities;
+using OnlineStore.Shared.Common.Utilities;
 
 namespace OnlineStore.Application.Commons.Mappings;
 public class MappingConfig : Profile
@@ -9,6 +10,6 @@ public class MappingConfig : Profile
         CreateMap<Product, ProductDto>().ReverseMap();
         CreateMap<Category, CategoryDto>().ReverseMap();
         CreateMap<Customer, AccountDto>().ReverseMap();
-        CreateMap<Account, AccountDto>().ReverseMap();
+        CreateMap<Account, AccountDto>().ReverseMap().ForMember(dest => dest.Password, opt => opt.MapFrom(src => Utilities.EncryptSHA512(src.Password)));
     }
 }
