@@ -10,9 +10,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+var originUrl = builder.Configuration.GetSection("OriginUrl").Value ?? string.Empty;
 builder.Services.AddCors(option =>
 {
-    option.AddDefaultPolicy(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    option.AddDefaultPolicy(x => x.WithOrigins(originUrl)
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod());
 });
 var app = builder.Build();
 
