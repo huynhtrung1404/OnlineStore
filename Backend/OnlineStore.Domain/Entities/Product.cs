@@ -8,4 +8,5 @@ public class Product : BaseEntity<Guid>
     public bool IsSales { get; set; }
     public long QuantitySold { get; set; }
     public IList<Category> Categories { get; } = new List<Category>();
+    public required string Name { get; set; }
 }

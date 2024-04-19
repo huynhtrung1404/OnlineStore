@@ -6,16 +6,9 @@ using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Features.Categories.Queries;
-public class GetCategoryByIdRequest : IRequest<ItemResponse<CategoryDto>>
-{
-    internal Guid Id { get; init; }
-    public GetCategoryByIdRequest(Guid id)
-    {
-        Id = id;
-    }
-}
+public record GetCategoryByIdRequest(Guid Id) : IRequest<ItemResponse<CategoryDto>> { }
 
-public class GetCategoryByIdRequestHandler : IRequestHandler<GetCategoryByIdRequest, ItemResponse<CategoryDto>>
+public sealed class GetCategoryByIdRequestHandler : IRequestHandler<GetCategoryByIdRequest, ItemResponse<CategoryDto>>
 {
     private readonly IOnlineStoreRepository<Category> _categoryRepository;
     private readonly IMapper _mapper;

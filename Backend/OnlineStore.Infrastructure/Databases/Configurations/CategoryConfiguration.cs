@@ -6,5 +6,6 @@ public class CategoryConfiguration : BaseConfiguration<Category>
     {
         base.Configure(builder);
         builder.ToTable("Categories");
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
     }
 }
