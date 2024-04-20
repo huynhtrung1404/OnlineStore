@@ -28,7 +28,7 @@ public sealed class GetAllCategoryRequestHandler : IRequestHandler<GetAllCategor
             Response = _mapper.Map<IEnumerable<CategoryDto>>(result),
             PageSize = request.PageSize,
             PageNumber = request.PageNumber,
-            TotalCount = await _categoryRepository.CountAsync(specification)
+            TotalCount = await _categoryRepository.CountAsync(new CategorySpecification())
         };
     }
 }

@@ -10,4 +10,8 @@ public class CategorySpecification : BaseSpecification<Category>
         ApplyOrderBy(x => x.CreatedDateTime);
     }
     public CategorySpecification(Guid id) : base(x => x.Id.Equals(id)) { }
+    public CategorySpecification(): base(x => x.IsEnabled)
+    {
+        ApplyOrderBy(x => x.CreatedDateTime);
+    }
 }

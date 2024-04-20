@@ -20,8 +20,8 @@ public sealed class GetAllProductRequestHandler : IRequestHandler<GetAllProductR
 
     public async Task<ListResponse<ProductDto>> Handle(GetAllProductRequest request, CancellationToken cancellationToken)
     {
-        var products = _productRepository.GetListAsync(new ProductSpecification(request.PageSize, request.PageNumber, true));
-        var count = await _productRepository.CountAsync(new ProductSpecification(request.PageSize, request.PageNumber));
+        var products = await _productRepository.GetListAsync(new ProductSpecification(request.PageSize, request.PageNumber, true));
+        var count = await _productRepository.CountAsync(new ProductSpecification());
         return new()
         {
             Response = _mapper.Map<IEnumerable<ProductDto>>(products),

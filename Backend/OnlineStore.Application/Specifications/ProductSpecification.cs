@@ -21,4 +21,9 @@ public class ProductSpecification : BaseSpecification<Product>
             AddInclude(x => x.Categories);
         }
     }
+
+    public ProductSpecification() : base(x => x.StockUnit > 0)
+    {
+        ApplyOrderBy(x => x.CreatedDateTime);
+    }
 }
