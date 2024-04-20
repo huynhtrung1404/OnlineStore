@@ -12,6 +12,6 @@ public class Account : BaseEntity<Guid>
     /// Will be implement in the future
     /// </summary>
     public bool Enabled2FA { get; set; } = false;
-    public virtual Customer? Customer { get; set; }
+    public virtual Customer Customer { get; set; } = default!;
     public Guid? CustomerId { get; set; }
 }

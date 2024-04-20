@@ -25,8 +25,7 @@ public class RegisterAccountRequestHandler : IRequestHandler<RegisterAccountRequ
     public async Task<ItemResponse<bool>> Handle(RegisterAccountRequest request, CancellationToken cancellationToken)
     {
         var account = _mapper.Map<Account>(request.Account);
-        var customer = _mapper.Map<Customer>(request.Account);
-        account.Customer = customer;
+        account.Customer = _mapper.Map<Customer>(request.Account);
         await _accountRepository.InsertAsync(account);
         await _unitOfWork.CommitChangesAsync();
         return new(true);
