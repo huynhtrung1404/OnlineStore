@@ -3,6 +3,7 @@ using OnlineStore.Application;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using OnlineStore.Application.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 var tokenIssuer = builder.Configuration.GetSection("Token:Issuer").Get<string>();
@@ -18,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.Configure<JwtTokenOption>(builder.Configuration.GetSection("Token"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
  {
