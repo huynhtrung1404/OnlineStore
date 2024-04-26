@@ -12,7 +12,5 @@ services:
         source: mssql-server-linux-data
         target: /var/opt/mssql
     restart: on-failure
-    volumes:
-      - mssql-server-linux-data:/data
 volumes:
   mssql-server-linux-data:
