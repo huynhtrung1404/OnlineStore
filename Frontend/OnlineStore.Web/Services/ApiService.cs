@@ -39,7 +39,7 @@ public class ApiService : IApiService
     {
         var content = JsonSerializer.Serialize(body, _options);
         var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
-        var response = await _onlineStoreClient.PostAsync(path, data);
+        var response = await _onlineStoreClient.PutAsync(path, data);
         if (!response.IsSuccessStatusCode)
             throw new ApplicationException($"{response.StatusCode} - {response.Content}");
         return response.StatusCode.Equals(HttpStatusCode.OK);

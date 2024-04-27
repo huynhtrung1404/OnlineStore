@@ -11,5 +11,5 @@ public class RegisterViewModel
     public string? Address2 { get; set; }
     public string? City { get; set; }
     public string? Province { get; set; }
-    public byte Gender { get; set; }
+    public byte Gender { get; set; } = 0;
 }
