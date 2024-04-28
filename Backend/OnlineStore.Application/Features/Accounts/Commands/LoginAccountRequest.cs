@@ -15,10 +15,7 @@ using OnlineStore.Domain.Entity;
 using OnlineStore.Shared.Common.Utilities;
 
 namespace OnlineStore.Application.Features.Accounts.Commands;
-public record LoginAccountRequest(LoginDto Login) : IRequest<ItemResponse<UserInfoDto>>
-{
-
-}
+public record LoginAccountRequest(LoginDto Login) : IRequest<ItemResponse<UserInfoDto>>;
 
 public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountRequest, ItemResponse<UserInfoDto>>
 {

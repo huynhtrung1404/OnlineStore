@@ -1,9 +1,5 @@
 namespace OnlineStore.Application.Features.Products.Queries;
-public record GetProductByIdRequest(Guid Id) : IRequest<ProductDto>
-{
-
-}
-
+public record GetProductByIdRequest(Guid Id) : IRequest<ProductDto>;
 public sealed class GetProductByIdRequestHandler : IRequestHandler<GetProductByIdRequest, ProductDto>
 {
     private readonly IProductService _productService;

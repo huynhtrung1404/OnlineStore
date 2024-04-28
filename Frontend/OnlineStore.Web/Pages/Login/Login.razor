@@ -1,3 +1,42 @@
 @page "/account/login"
+@using OnlineStore.Web.Services.Interfaces;
+@using OnlineStore.Web.ViewModels;
+@inject IApiService _apiService;
+@inject NavigationManager _navigation;
+@inject ILocalStorageService _localStorageService;
 <PageTitle>Login Page</PageTitle>
 <h1>This is login page</h1>
+
+<form>
+    <div class="form-group">
+        <label for="userName">User Name</label>
+        <input type="userName" class="form-control" id="userName" aria-describedby="userName"
+            placeholder="Enter User Name" @bind="LoginInput.UserName">
+    </div>
+    <div class="form-group">
+        <label for="password-label">Password</label>
+        <input type="password" class="form-control" id="password-label" placeholder="Password"
+            @bind="LoginInput.Password">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="keepMeLogin" @bind="LoginInput.IsKeptLogin">
+        <label class="form-check-label" for="keepMeLogin">Keep me login</label>
+    </div>
+    <button type="button" class="btn btn-primary mt-6" @onclick="LoginToPortal">Submit</button>
+</form>
+
+@code {
+    private LoginViewModel LoginInput = new();
+    private async Task LoginToPortal()
+    {
+        var response = await _apiService.PostAsync<LoginViewModel, LoginResultViewModel>("api/account/login", LoginInput);
+        if (!string.IsNullOrWhiteSpace(response?.Token))
+        {
+            await _localStorageService.SetItem("accessToken", response.Token);
+            await _localStorageService.SetItem("userName", response.UserName);
+            await _localStorageService.SetItem("firstName", response.FirstName);
+            await _localStorageService.SetItem("lastName", response.LastName);
+            _navigation.NavigateTo("/");
+        }
+    }
+}
