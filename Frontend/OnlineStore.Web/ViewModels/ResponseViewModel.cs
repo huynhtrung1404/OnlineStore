@@ -9,5 +9,5 @@ public class ResponseListViewModel<T>
 
 public class ResponseItemViewModel<T>
 {
-    public T Response { get; set; } = default!;
+    public T? Response { get; set; }
 }

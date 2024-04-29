@@ -35,9 +35,12 @@ public class ApiService : IApiService
     public async Task<TResult> PostAsync<TBody, TResult>(string path, TBody body)
     {
         var response = await PostDataAsync(path, body);
+        Console.WriteLine(await response.Content.ReadAsStringAsync());
         if (response.IsSuccessStatusCode)
         {
-            return JsonSerializer.Deserialize<TResult>(await response.Content.ReadAsStringAsync()) ?? default!;
+
+            var data = JsonSerializer.Deserialize<TResult>(await response.Content.ReadAsStringAsync(), _options) ?? default!;
+            return data;
         }
         return default!;
     }

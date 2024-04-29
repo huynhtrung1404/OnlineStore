@@ -29,13 +29,24 @@
     private LoginViewModel LoginInput = new();
     private async Task LoginToPortal()
     {
-        var response = await _apiService.PostAsync<LoginViewModel, LoginResultViewModel>("api/account/login", LoginInput);
-        if (!string.IsNullOrWhiteSpace(response?.Token))
+        var result = await _apiService.PostAsync<LoginViewModel,
+        ResponseItemViewModel<LoginResultViewModel>>("api/account/login", LoginInput);
+        Console.WriteLine(result.Response?.Token ?? "Khong thay");
+        if (!string.IsNullOrWhiteSpace(result.Response?.Token))
         {
-            await _localStorageService.SetItem("accessToken", response.Token);
-            await _localStorageService.SetItem("userName", response.UserName);
-            await _localStorageService.SetItem("firstName", response.FirstName);
-            await _localStorageService.SetItem("lastName", response.LastName);
+            await _localStorageService.SetItem("accessToken", result.Response.Token);
+            await _localStorageService.SetItem("userName", result.Response.UserName);
+            await _localStorageService.SetItem("firstName", result.Response.FirstName);
+            await _localStorageService.SetItem("lastName", result.Response.LastName);
+            _navigation.Refresh();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentToken = await _localStorageService.GetItem<string>("accessToken");
+        if (!string.IsNullOrWhiteSpace(currentToken))
+        {
             _navigation.NavigateTo("/");
         }
     }
