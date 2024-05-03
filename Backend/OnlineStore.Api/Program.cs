@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using OnlineStore.Application.Options;
+using OnlineStore.Api.TestMiddleware;
 var builder = WebApplication.CreateBuilder(args);
 
 var tokenIssuer = builder.Configuration.GetSection("Token:Issuer").Get<string>();
@@ -52,6 +53,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<TestMiddleware>();
 
 app.UseCors();
 app.UseAuthentication();

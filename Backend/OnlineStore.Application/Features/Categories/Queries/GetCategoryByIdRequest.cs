@@ -21,7 +21,7 @@ public sealed class GetCategoryByIdRequestHandler : IRequestHandler<GetCategoryB
 
     public async Task<ItemResponse<CategoryDto>> Handle(GetCategoryByIdRequest request, CancellationToken cancellationToken)
     {
-        var data = await _categoryRepository.GetListAsync(new CategorySpecification(request.Id));
+        var data = await _categoryRepository.GetItemAsync(new CategorySpecification(request.Id));
         return new()
         {
             Response = _mapper.Map<CategoryDto>(data)
