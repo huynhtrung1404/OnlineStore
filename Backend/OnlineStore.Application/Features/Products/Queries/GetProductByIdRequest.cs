@@ -1,17 +1,24 @@
+using AutoMapper;
+using OnlineStore.Application.Specification;
+using OnlineStore.Domain.Commons.Interface;
+using OnlineStore.Domain.Entities;
+
 namespace OnlineStore.Application.Features.Products.Queries;
 public record GetProductByIdRequest(Guid Id) : IRequest<ProductDto>;
 public sealed class GetProductByIdRequestHandler : IRequestHandler<GetProductByIdRequest, ProductDto>
 {
-    private readonly IProductService _productService;
+    private readonly IOnlineStoreRepository<Product> _productRepository;
+    private readonly IMapper _mapper;
 
-    public GetProductByIdRequestHandler(IProductService productService)
+    public GetProductByIdRequestHandler(IOnlineStoreRepository<Product> productRepository, IMapper mapper)
     {
-        _productService = productService;
+        _productRepository = productRepository;
+        _mapper = mapper;
     }
 
     public async Task<ProductDto> Handle(GetProductByIdRequest request, CancellationToken cancellationToken)
     {
-        return await _productService.GetProductByIdAsync(request.Id);
+        var result = await _productRepository.GetItemAsync(new ProductSpecification(request.Id));
+        return _mapper.Map<ProductDto>(result);
     }
 }
-
