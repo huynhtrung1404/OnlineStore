@@ -1,0 +1,32 @@
+@using OnlineStore.Web.Services.Interfaces
+@inject ILocalStorageService _localStorageService;
+<div class="top-row px-4">
+    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+
+    @if (!IsLogin)
+    {
+        <a href="/Account/Register">Register An Account</a>
+        <a href="/Account/Login">Login</a>
+    }
+    else
+    {
+        <p>@(Name ?? UserName)</p>
+    }
+</div>
+
+@code {
+    private string Name = string.Empty;
+    private string UserName = string.Empty;
+    private bool IsLogin = false;
+    protected async override Task OnInitializedAsync()
+    {
+        var token = await _localStorageService.GetItem<string>("accessToken");
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            Name = await _localStorageService.GetItem<string>("firstName") + " "
+            + await _localStorageService.GetItem<string>("lastName");
+            IsLogin = true;
+            UserName = await _localStorageService.GetItem<string>("userName");
+        }
+    }
+}

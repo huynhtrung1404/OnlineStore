@@ -28,7 +28,7 @@ public class BaseSpecification<T> : ISpecification<T> where T : class
     {
         IncludeStrings.Add(includeString);
     }
-    protected virtual void ApplyPaging(long currentPage, long pageSize)
+    protected virtual void ApplyPaging(long pageSize, long currentPage)
     {
         CurrentPage = currentPage;
         PageSize = pageSize;

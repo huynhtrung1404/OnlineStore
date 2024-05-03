@@ -38,6 +38,74 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.ToTable("CategoryProduct", "OnlineStore");
                 });
 
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 12, 30, 25, 343, DateTimeKind.Utc).AddTicks(318));
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Enabled2FA")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("UserName");
+
+                    b.ToTable("Accounts", "OnlineStore");
+                });
+
             modelBuilder.Entity("OnlineStore.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -51,12 +119,12 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 3, 11, 28, 108, DateTimeKind.Utc).AddTicks(5100));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 12, 30, 25, 351, DateTimeKind.Utc).AddTicks(867));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -79,7 +147,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -89,6 +157,80 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", "OnlineStore");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 12, 30, 25, 351, DateTimeKind.Utc).AddTicks(7921));
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FirstName");
+
+                    b.HasIndex("LastName");
+
+                    b.ToTable("Customers", "OnlineStore");
                 });
 
             modelBuilder.Entity("OnlineStore.Domain.Entities.Product", b =>
@@ -107,12 +249,12 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 3, 11, 28, 108, DateTimeKind.Utc).AddTicks(9336));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 12, 30, 25, 352, DateTimeKind.Utc).AddTicks(4488));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -143,7 +285,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
@@ -152,7 +294,61 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("Products", "OnlineStore");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entity.UserToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasDefaultValue("Current System");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 12, 30, 25, 356, DateTimeKind.Utc).AddTicks(2483));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("UserTokens", "OnlineStore");
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>
@@ -168,6 +364,24 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entities.Account", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("OnlineStore.Domain.Entity.UserToken", b =>
+                {
+                    b.HasOne("OnlineStore.Domain.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.Navigation("Account");
                 });
 #pragma warning restore 612, 618
         }

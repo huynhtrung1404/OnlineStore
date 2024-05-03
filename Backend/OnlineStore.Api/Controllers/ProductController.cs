@@ -10,8 +10,8 @@ public class ProductController : BaseController
     }
 
     [HttpGet("GetAllProduct")]
-    public async Task<IActionResult> GetAllProduct() =>
-        Ok(await _sender.Send(new GetAllProductRequest()));
+    public async Task<IActionResult> GetAllProduct(long pageSize, long pageNumber) =>
+        Ok(await _sender.Send(new GetAllProductRequest(pageSize, pageNumber)));
 
     [HttpGet("GetProductById")]
     public async Task<IActionResult> GetProductById(Guid id) => Ok(await _sender.Send(new GetProductByIdRequest(id)));

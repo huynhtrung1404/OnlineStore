@@ -6,18 +6,9 @@ using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Features.Categories.Queries;
-public class GetAllCategoryRequest : IRequest<ListResponse<CategoryDto>>
-{
-    internal long PageSize { get; init; }
-    internal long PageNumber { get; init; }
-    public GetAllCategoryRequest(long pageSize, long pageNumber)
-    {
-        PageNumber = pageNumber;
-        PageSize = pageSize;
-    }
-}
+public record GetAllCategoryRequest(long PageSize, long PageNumber) : IRequest<ListResponse<CategoryDto>> { }
 
-public class GetAllCategoryRequestHandler : IRequestHandler<GetAllCategoryRequest, ListResponse<CategoryDto>>
+public sealed class GetAllCategoryRequestHandler : IRequestHandler<GetAllCategoryRequest, ListResponse<CategoryDto>>
 {
     private readonly IOnlineStoreRepository<Category> _categoryRepository;
     private readonly IMapper _mapper;
@@ -37,7 +28,7 @@ public class GetAllCategoryRequestHandler : IRequestHandler<GetAllCategoryReques
             Response = _mapper.Map<IEnumerable<CategoryDto>>(result),
             PageSize = request.PageSize,
             PageNumber = request.PageNumber,
-            TotalCount = await _categoryRepository.CountAsync(specification)
+            TotalCount = await _categoryRepository.CountAsync(new CategorySpecification())
         };
     }
 }

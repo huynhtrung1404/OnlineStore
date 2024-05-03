@@ -6,8 +6,12 @@ public class CategorySpecification : BaseSpecification<Category>
 {
     public CategorySpecification(long pageSize, long pageNumber) : base(x => x.IsEnabled)
     {
-        ApplyPaging(pageNumber, pageSize);
+        ApplyPaging(pageSize, pageNumber);
         ApplyOrderBy(x => x.CreatedDateTime);
     }
     public CategorySpecification(Guid id) : base(x => x.Id.Equals(id)) { }
+    public CategorySpecification() : base(x => x.IsEnabled)
+    {
+        ApplyOrderBy(x => x.CreatedDateTime);
+    }
 }

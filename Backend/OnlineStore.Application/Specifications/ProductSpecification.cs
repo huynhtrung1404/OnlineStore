@@ -12,9 +12,18 @@ public class ProductSpecification : BaseSpecification<Product>
     {
     }
 
-    public ProductSpecification(long pageSize, long pageNumber) : base(x => x.StockUnit > 0)
+    public ProductSpecification(long pageSize, long pageNumber, bool isIncludedCategory = false) : base(x => x.StockUnit > 0)
     {
         ApplyPaging(pageSize, pageNumber);
+        ApplyOrderBy(x => x.CreatedDateTime);
+        if (isIncludedCategory)
+        {
+            AddInclude(x => x.Categories);
+        }
+    }
+
+    public ProductSpecification() : base(x => x.StockUnit > 0)
+    {
         ApplyOrderBy(x => x.CreatedDateTime);
     }
 }

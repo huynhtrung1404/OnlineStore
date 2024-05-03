@@ -12,3 +12,4 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:6001;https://+:6002
       - ConnectionStrings:DefaultConnection=Server=local-db;Initial Catalog=OnlineStore;MultipleActiveResultSets=true;user id=sa;password=P@ssw0rd; TrustServerCertificate=True
+      - OriginUrl=http://localhost:5121
