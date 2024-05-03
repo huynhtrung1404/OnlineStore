@@ -2,10 +2,8 @@ namespace OnlineStore.Api.Controllers;
 [Route("api/[controller]")]
 public class BaseController : ControllerBase
 {
-    protected readonly ISender _sender;
+    protected readonly ISender Sender;
 
-    public BaseController(ISender sender)
-    {
-        _sender = sender;
-    }
+    public BaseController(ISender sender) =>
+        Sender = sender;
 }
