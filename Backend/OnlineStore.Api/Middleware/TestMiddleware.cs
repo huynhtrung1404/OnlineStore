@@ -1,7 +1,7 @@
 using System.Text;
 using OnlineStore.Application.Tests.Commands;
 
-namespace OnlineStore.Api.TestMiddleware;
+namespace OnlineStore.Api.Test;
 public class TestMiddleware
 {
     private readonly RequestDelegate _next;
@@ -24,6 +24,7 @@ public class TestMiddleware
             requestContent.AppendLine($"PathBase: {httpContext.Request.PathBase}");
             requestContent.AppendLine($"Path: {httpContext.Request.Path}");
             await _sender.Send(new CreateTestLogRequest("Log Request", requestContent.ToString(), LogLevel.Information));
+            await _next(httpContext);
         }
         catch (Exception ex)
         {

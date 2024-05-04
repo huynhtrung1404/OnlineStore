@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OnlineStore.Application.Features.Tests.Behaviors;
+using OnlineStore.Application.Test;
 
 namespace OnlineStore.Application;
 public static class DependencyInjection
@@ -11,9 +12,10 @@ public static class DependencyInjection
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            config.AddOpenBehavior(typeof(LoggingBehaviors<,>));
         });
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        // Will comment when test feature is off 
+        services.AddTestService();
         services.AddLogging(cfg =>
         {
             cfg.ClearProviders();

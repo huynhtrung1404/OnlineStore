@@ -16,6 +16,9 @@ public sealed class CreateTestLogRequestHandler : IRequestHandler<CreateTestLogR
     {
         var now = DateTime.UtcNow.ToString("G");
         await Task.Run(()
-                => _logger.Log(request.LogLevel, $"[{now}]{request.LogName} \n {request.Detail}"));
+                =>
+        {
+            _logger.Log(request.LogLevel, $"[{now}]{request.LogName} \n {request.Detail}");
+        });
     }
 }
