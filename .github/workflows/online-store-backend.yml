@@ -22,7 +22,6 @@ jobs:
           dotnet-version: 7.0.x
       - run: dotnet restore
         name: Restore project
-        working-directory: Backend
       - run: dotnet build --configuration Release --no-restore
         name: Build Project
         working-directory: Backend

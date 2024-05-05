@@ -47,7 +47,10 @@ public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountReq
         var tokenOptions = new JwtSecurityToken(
             issuer: _config.Issuer,
             audience: _config.Issuer,
-            claims: new List<Claim>(),
+            claims: new List<Claim>() {
+                new("UserName", request.Login.UserName),
+                new("Role",account.Permission.ToString())
+            },
             expires: DateTime.Now.AddMinutes(5),
             signingCredentials: signInCredentials
         );
