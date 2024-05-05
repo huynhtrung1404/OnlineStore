@@ -81,8 +81,6 @@ public class ApiService : IApiService
 
         return response;
     }
-
-
     private async Task SetHeaderAsync()
     {
         var accessToken = await _localStorageService.GetItem<string>("accessToken");
@@ -90,6 +88,14 @@ public class ApiService : IApiService
         {
             _onlineStoreClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", accessToken);
+        }
+    }
+
+    private async Task HandleResponseAsync(HttpResponseMessage response)
+    {
+        if (response.StatusCode.Equals(HttpStatusCode.Unauthorized))
+        {
+            var refreshToken = await _localStorageService.GetItem<string>("refreshToken");
         }
     }
 }

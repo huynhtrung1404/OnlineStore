@@ -7,19 +7,16 @@ namespace OnlineStore.Api.Controllers;
 [AllowAnonymous]
 public class AccountController : BaseController
 {
-    public AccountController(ISender sender) : base(sender)
-    {
-    }
 
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] AccountDto account)
     {
-        return Ok(await _sender.Send(new RegisterAccountRequest(account)));
+        return Ok(await Sender.Send(new RegisterAccountRequest(account)));
     }
 
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoginDto login)
     {
-        return Ok(await _sender.Send(new LoginAccountRequest(login)));
+        return Ok(await Sender.Send(new LoginAccountRequest(login)));
     }
 }
