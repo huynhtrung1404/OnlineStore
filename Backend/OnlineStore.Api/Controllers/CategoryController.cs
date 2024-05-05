@@ -1,10 +1,11 @@
 
+using Microsoft.AspNetCore.Authorization;
 using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Features.Categories.Commands;
 using OnlineStore.Application.Features.Categories.Queries;
-using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Api.Controllers;
+[Authorize]
 public class CategoryController : BaseController
 {
     public CategoryController(ISender sender) : base(sender)

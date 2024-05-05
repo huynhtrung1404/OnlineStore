@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Features.Products.Commands;
 using OnlineStore.Application.Features.Products.Queries;
 
 namespace OnlineStore.Api.Controllers;
+[Authorize]
 public class ProductController : BaseController
 {
     public ProductController(ISender sender) : base(sender)

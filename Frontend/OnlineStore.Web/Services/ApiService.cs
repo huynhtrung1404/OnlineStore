@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
@@ -9,15 +10,18 @@ public class ApiService : IApiService
 {
     private readonly HttpClient _onlineStoreClient;
     private readonly JsonSerializerOptions _options;
+    private readonly ILocalStorageService _localStorageService;
 
-    public ApiService(IHttpClientFactory httpClientFactory)
+    public ApiService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorageService)
     {
         _onlineStoreClient = httpClientFactory.CreateClient("OnlineStore");
         _options = new() { PropertyNameCaseInsensitive = true };
+        _localStorageService = localStorageService;
     }
 
     public async Task<T> GetAsync<T>(string path)
     {
+        await SetHeaderAsync();
         var response = await _onlineStoreClient.GetAsync(path.ToString());
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
@@ -27,6 +31,7 @@ public class ApiService : IApiService
 
     public async Task<bool> PostAsync<TBody>(string path, TBody body)
     {
+        await SetHeaderAsync();
         var response = await PostDataAsync(path, body);
 
         return response.StatusCode.Equals(HttpStatusCode.OK);
@@ -34,6 +39,7 @@ public class ApiService : IApiService
 
     public async Task<TResult> PostAsync<TBody, TResult>(string path, TBody body)
     {
+        await SetHeaderAsync();
         var response = await PostDataAsync(path, body);
         Console.WriteLine(await response.Content.ReadAsStringAsync());
         if (response.IsSuccessStatusCode)
@@ -47,6 +53,7 @@ public class ApiService : IApiService
 
     public async Task<bool> PutAsync<TBody>(string path, TBody body)
     {
+        await SetHeaderAsync();
         var content = JsonSerializer.Serialize(body, _options);
         var data = new StringContent(content, Encoding.UTF8, MediaTypeNames.Application.Json);
         var response = await _onlineStoreClient.PutAsync(path, data);
@@ -73,5 +80,16 @@ public class ApiService : IApiService
         }
 
         return response;
+    }
+
+
+    private async Task SetHeaderAsync()
+    {
+        var accessToken = await _localStorageService.GetItem<string>("accessToken");
+        if (!string.IsNullOrWhiteSpace(accessToken))
+        {
+            _onlineStoreClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", accessToken);
+        }
     }
 }
