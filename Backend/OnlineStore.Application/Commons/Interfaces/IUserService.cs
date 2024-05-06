@@ -5,4 +5,5 @@ public interface IUserService
     string LastName { get; }
     string Role { get; }
     string UserName { get; }
+    Guid SessionId { get; }
 }

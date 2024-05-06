@@ -31,4 +31,18 @@ public class CurrentUserService : IUserService
             return string.Empty;
         }
     }
+
+    public Guid SessionId
+    {
+        get
+        {
+            var data = _context.HttpContext?.User.Identity as ClaimsIdentity;
+            if (data is not null)
+            {
+                var result = data.FindFirst("SessionId")?.Value ?? string.Empty;
+                return Guid.Parse(result);
+            }
+            return Guid.Empty;
+        }
+    }
 }

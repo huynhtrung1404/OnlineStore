@@ -9,4 +9,9 @@ public class AccountSpecification : BaseSpecification<Account>
     {
         AddInclude(x => x.Customer);
     }
+    public AccountSpecification(string userName)
+        : base(x => x.UserName.Equals(userName))
+    {
+        ApplyProjection(x => new { x.UserName });
+    }
 }

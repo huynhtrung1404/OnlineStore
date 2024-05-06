@@ -7,4 +7,5 @@ public class UserToken : BaseEntity<Guid>
     public DateTime EndDate { get; set; }
     public Guid? AccountId { get; set; }
     public Account? Account { get; set; }
+    public Guid SessionId { get; set; }
 }

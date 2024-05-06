@@ -19,4 +19,10 @@ public class AccountController : BaseController
     {
         return Ok(await Sender.Send(new LoginAccountRequest(login)));
     }
+
+    [HttpGet("RefreshToken")]
+    public async Task<IActionResult> RefreshToken()
+    {
+        return Ok(await Sender.Send(new RefreshTokenRequest()));
+    }
 }

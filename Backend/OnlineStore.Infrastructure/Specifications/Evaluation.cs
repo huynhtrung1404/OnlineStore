@@ -53,6 +53,10 @@ public static class Evaluation<T> where T : class
         {
             query = query.OrderByDescending(specification.OrderByDescending);
         }
+        if (specification.Projection is not null)
+        {
+            query = (IQueryable<T>)query.Select(specification.Projection);
+        }
         return query;
     }
 }

@@ -44,12 +44,14 @@ public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountReq
             throw new ArgumentNullException("Account is null");
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Key));
         var signInCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+        var session = Guid.NewGuid();
         var tokenOptions = new JwtSecurityToken(
             issuer: _config.Issuer,
             audience: _config.Issuer,
             claims: new List<Claim>() {
                 new("UserName", request.Login.UserName),
-                new("Role",account.Permission.ToString())
+                new("Role",account.Permission.ToString()),
+                new("Session", session.ToString())
             },
             expires: DateTime.Now.AddMinutes(5),
             signingCredentials: signInCredentials
@@ -63,7 +65,7 @@ public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountReq
             Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions)
         };
         var userToken = _mapper.Map<UserToken>(response);
-
+        userToken.SessionId = session;
         userToken.Account = account;
         userToken.EndDate = request.Login.IsKeptLogin ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddDays(1);
         await _userTokenRepository.InsertAsync(userToken);
