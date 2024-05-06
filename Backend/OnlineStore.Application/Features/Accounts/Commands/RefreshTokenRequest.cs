@@ -1,38 +1,34 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OnlineStore.Application.Options;
 using OnlineStore.Application.Specifications;
 using OnlineStore.Domain.Commons.Interface;
-using OnlineStore.Domain.Entities;
 using OnlineStore.Domain.Entity;
 
 namespace OnlineStore.Application.Features.Accounts.Commands;
-public record RefreshTokenRequest : IRequest<ItemResponse<UserInfoDto>>;
+public record RefreshTokenRequest(UserInfoDto UserInfo) : IRequest<ItemResponse<UserInfoDto>>;
 public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenRequest, ItemResponse<UserInfoDto>>
 {
     private readonly IUserService _userService;
     private readonly IOnlineStoreRepository<UserToken> _userTokenRepository;
-    private readonly IOnlineStoreRepository<Account> _accountRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly JwtTokenOption _config;
-    public RefreshTokenRequestHandler(IUserService userService, IOnlineStoreRepository<UserToken> userToken, IOnlineStoreRepository<Account> accountRepository, IUnitOfWork unitOfWork, IOptionsSnapshot<JwtTokenOption> option)
+    public RefreshTokenRequestHandler(IUserService userService, IOnlineStoreRepository<UserToken> userToken, IUnitOfWork unitOfWork, IOptionsSnapshot<JwtTokenOption> option)
     {
         _userService = userService;
         _userTokenRepository = userToken;
-        _accountRepository = accountRepository;
         _unitOfWork = unitOfWork;
         _config = option.Value;
     }
 
     public async Task<ItemResponse<UserInfoDto>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetItemAsync(new AccountSpecification(_userService.UserName))
-            ?? throw new ArgumentNullException("Account doesn't exist");
-        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(account.Id))
+        if (_userService.IsAuthenticated)
+            return new();
+        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(request.UserInfo.RefreshToken ?? throw new ArgumentException("Data is invalid")))
             ?? throw new UnauthorizedAccessException("Cannot access to account");
         if (userToken.EndDate > DateTime.UtcNow)
         {
@@ -42,8 +38,8 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
                 issuer: _config.Issuer,
                 audience: _config.Issuer,
                 claims: new List<Claim>() {
-                    new("UserName", account.UserName),
-                    new("Role",account.Permission.ToString()),
+                    new("UserName", request.UserInfo.UserName ?? string.Empty),
+                    new("Role", userToken.Account?.Permission.ToString() ?? string.Empty),
                     new("Session", userToken.SessionId.ToString())
                 },
                 expires: DateTime.Now.AddMinutes(5),
@@ -51,7 +47,7 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
             );
             UserInfoDto response = new()
             {
-                UserName = account.UserName,
+                UserName = request.UserInfo.UserName,
                 Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions)
             };
             userToken.Token = response.Token;

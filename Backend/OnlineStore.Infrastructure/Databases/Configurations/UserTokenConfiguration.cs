@@ -8,5 +8,7 @@ public class UserTokenConfiguration : BaseConfiguration<UserToken>
         base.Configure(builder);
         builder.ToTable("UserTokens");
         builder.Property(x => x.CreatedBy).HasDefaultValue("Current System");
+        builder.Property(x => x.RefreshToken).IsRequired();
+        builder.HasIndex(x => x.RefreshToken);
     }
 }

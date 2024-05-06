@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using OnlineStore.Application.DTOs;
 using OnlineStore.Application.Features.Accounts.Commands;
+using OnlineStore.Application.Features.Categories.Commands;
 
 namespace OnlineStore.Api.Controllers;
 
@@ -20,9 +21,9 @@ public class AccountController : BaseController
         return Ok(await Sender.Send(new LoginAccountRequest(login)));
     }
 
-    [HttpGet("RefreshToken")]
-    public async Task<IActionResult> RefreshToken()
+    [HttpPost("RefreshToken")]
+    public async Task<IActionResult> RefreshToken([FromBody] UserInfoDto userInfo)
     {
-        return Ok(await Sender.Send(new RefreshTokenRequest()));
+        return Ok(await Sender.Send(new RefreshTokenRequest(userInfo)));
     }
 }

@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using OnlineStore.Application.Commons.Interfaces;
 
 namespace OnlineStore.Api.Infrastructures.Services;
@@ -45,4 +44,6 @@ public class CurrentUserService : IUserService
             return Guid.Empty;
         }
     }
+    public bool IsAuthenticated => _context.HttpContext?.User?.Identity?.IsAuthenticated
+                                    ?? throw new ArgumentNullException("Cannot check context");
 }

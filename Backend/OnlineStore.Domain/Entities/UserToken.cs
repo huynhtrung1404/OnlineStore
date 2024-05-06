@@ -8,4 +8,6 @@ public class UserToken : BaseEntity<Guid>
     public Guid? AccountId { get; set; }
     public Account? Account { get; set; }
     public Guid SessionId { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpire { get; set; }
 }

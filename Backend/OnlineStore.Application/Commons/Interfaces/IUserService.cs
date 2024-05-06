@@ -6,4 +6,5 @@ public interface IUserService
     string Role { get; }
     string UserName { get; }
     Guid SessionId { get; }
+    bool IsAuthenticated { get; }
 }
