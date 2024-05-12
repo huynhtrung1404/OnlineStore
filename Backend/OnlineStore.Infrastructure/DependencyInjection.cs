@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Application.Commons.Interfaces;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Infrastructure.Databases.Contexts;
 using OnlineStore.Infrastructure.Databases.Repositories;
+using OnlineStore.Infrastructure.Services;
 using OnlineStore.Shared.Common.Enums;
 
 namespace OnlineStore.Infrastructure;
@@ -15,6 +17,7 @@ public static class DependencyInjection
             x => x.EnableRetryOnFailure((int)Times.Fifth)));
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped(typeof(IOnlineStoreRepository<>), typeof(OnlineStoreRepository<>));
+        services.AddTransient<IDateTimeService, DateTimeService>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         return services;
     }

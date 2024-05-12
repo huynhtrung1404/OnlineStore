@@ -2,10 +2,7 @@ namespace OnlineStore.Api.Controllers;
 [Route("api/[controller]")]
 public class BaseController : ControllerBase
 {
-    protected readonly ISender _sender;
+    private ISender? _sender;
+    protected ISender Sender => _sender ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-    public BaseController(ISender sender)
-    {
-        _sender = sender;
-    }
 }

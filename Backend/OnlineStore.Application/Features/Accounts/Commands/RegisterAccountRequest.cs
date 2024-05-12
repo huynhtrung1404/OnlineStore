@@ -4,10 +4,7 @@ using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 
 namespace OnlineStore.Application.Features.Accounts.Commands;
-public record RegisterAccountRequest(AccountDto Account) : IRequest<ItemResponse<bool>>
-{
-
-}
+public record RegisterAccountRequest(AccountDto Account) : IRequest<ItemResponse<bool>>;
 
 public class RegisterAccountRequestHandler : IRequestHandler<RegisterAccountRequest, ItemResponse<bool>>
 {

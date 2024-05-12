@@ -14,6 +14,7 @@ public class BaseSpecification<T> : ISpecification<T> where T : class
     public Expression<Func<T, object>> OrderBy { get; private set; } = default!;
     public Expression<Func<T, object>> OrderByDescending { get; private set; } = default!;
     public Expression<Func<T, object>> GroupBy { get; private set; } = default!;
+    public Func<T, object> Projection { get; private set; } = default!;
 
     public long PageSize { get; private set; }
     public long CurrentPage { get; private set; } = 1;
@@ -47,4 +48,10 @@ public class BaseSpecification<T> : ISpecification<T> where T : class
     {
         GroupBy = groupByExpression;
     }
+
+    protected virtual void ApplyProjection(Func<T, object> projection)
+    {
+        Projection = projection;
+    }
+
 }

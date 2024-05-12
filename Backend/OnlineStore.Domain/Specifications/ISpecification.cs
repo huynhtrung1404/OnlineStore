@@ -9,6 +9,7 @@ public interface ISpecification<T>
     Expression<Func<T, object>> OrderBy { get; }
     Expression<Func<T, object>> OrderByDescending { get; }
     Expression<Func<T, object>> GroupBy { get; }
+    Func<T, object> Projection { get; }
 
     long PageSize { get; }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Infrastructure.Databases.Contexts;
 
@@ -11,9 +12,11 @@ using OnlineStore.Infrastructure.Databases.Contexts;
 namespace OnlineStore.Infrastructure.Databases.Migrations
 {
     [DbContext(typeof(OnlineStoreContext))]
-    partial class OnlineStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240506044418_Update_Account")]
+    partial class Update_Account
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 6, 9, 16, 55, 800, DateTimeKind.Utc).AddTicks(6990));
+                        .HasDefaultValue(new DateTime(2024, 5, 6, 4, 44, 18, 37, DateTimeKind.Utc).AddTicks(2694));
 
                     b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
@@ -124,7 +127,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 6, 9, 16, 55, 811, DateTimeKind.Utc).AddTicks(860));
+                        .HasDefaultValue(new DateTime(2024, 5, 6, 4, 44, 18, 42, DateTimeKind.Utc).AddTicks(6166));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -188,7 +191,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 6, 9, 16, 55, 811, DateTimeKind.Utc).AddTicks(8838));
+                        .HasDefaultValue(new DateTime(2024, 5, 6, 4, 44, 18, 43, DateTimeKind.Utc).AddTicks(188));
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
@@ -254,7 +257,7 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 6, 9, 16, 55, 812, DateTimeKind.Utc).AddTicks(7769));
+                        .HasDefaultValue(new DateTime(2024, 5, 6, 4, 44, 18, 43, DateTimeKind.Utc).AddTicks(4020));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -322,16 +325,9 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 5, 6, 9, 16, 55, 819, DateTimeKind.Utc).AddTicks(6722));
+                        .HasDefaultValue(new DateTime(2024, 5, 6, 4, 44, 18, 45, DateTimeKind.Utc).AddTicks(7745));
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RefreshToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("RefreshTokenExpire")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("SessionId")
@@ -357,8 +353,6 @@ namespace OnlineStore.Infrastructure.Databases.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("RefreshToken");
 
                     b.ToTable("UserTokens", "OnlineStore");
                 });
