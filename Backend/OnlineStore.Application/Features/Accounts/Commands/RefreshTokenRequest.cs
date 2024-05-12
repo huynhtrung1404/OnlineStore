@@ -16,19 +16,21 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
     private readonly IOnlineStoreRepository<UserToken> _userTokenRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly JwtTokenOption _config;
-    public RefreshTokenRequestHandler(IUserService userService, IOnlineStoreRepository<UserToken> userToken, IUnitOfWork unitOfWork, IOptionsSnapshot<JwtTokenOption> option)
+    private readonly IDateTimeService _dateTimeService;
+    public RefreshTokenRequestHandler(IUserService userService, IOnlineStoreRepository<UserToken> userToken, IUnitOfWork unitOfWork, IOptionsSnapshot<JwtTokenOption> option, IDateTimeService dateTimeService)
     {
         _userService = userService;
         _userTokenRepository = userToken;
         _unitOfWork = unitOfWork;
         _config = option.Value;
+        _dateTimeService = dateTimeService;
     }
 
     public async Task<ItemResponse<UserInfoDto>> Handle(RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         if (_userService.IsAuthenticated)
             return new();
-        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(request.refreshToken ?? throw new ArgumentException("Data is invalid")))
+        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(request.refreshToken ?? throw new ArgumentException("Data is invalid"), _dateTimeService.Now))
             ?? throw new UnauthorizedAccessException("Cannot access to account");
         if (userToken.EndDate > DateTime.UtcNow)
         {
@@ -38,7 +40,7 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
                 issuer: _config.Issuer,
                 audience: _config.Issuer,
                 claims: new List<Claim>() {
-                    new(Variable.Role, userToken.Account?.Permission.ToString() ?? string.Empty),
+                    new(ClaimTypes.Role, userToken.Account?.Permission.ToString() ?? string.Empty),
                     new(Variable.Session, userToken.SessionId.ToString()),
                     new(Variable.UserName, userToken.Account?.UserName ?? string.Empty)
                 },

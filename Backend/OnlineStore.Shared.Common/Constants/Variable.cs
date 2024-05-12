@@ -1,7 +1,7 @@
 namespace OnlineStore.Shared.Common.Constants;
 public class Variable
 {
-    public static readonly string UserName = "UserName";
-    public static readonly string Role = "Role";
-    public static readonly string Session = "Session";
+    public const string UserName = "UserName";
+    public const string Role = "Role";
+    public const string Session = "Session";
 }
