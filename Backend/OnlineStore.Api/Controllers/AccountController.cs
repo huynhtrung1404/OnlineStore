@@ -21,9 +21,9 @@ public class AccountController : BaseController
         return Ok(await Sender.Send(new LoginAccountRequest(login)));
     }
 
-    [HttpPost("RefreshToken")]
-    public async Task<IActionResult> RefreshToken([FromBody] UserInfoDto userInfo)
+    [HttpPost("callback")]
+    public async Task<IActionResult> RefreshToken(string refreshToken)
     {
-        return Ok(await Sender.Send(new RefreshTokenRequest(userInfo)));
+        return Ok(await Sender.Send(new RefreshTokenRequest(refreshToken)));
     }
 }

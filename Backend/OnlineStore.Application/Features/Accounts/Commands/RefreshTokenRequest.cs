@@ -9,7 +9,7 @@ using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entity;
 
 namespace OnlineStore.Application.Features.Accounts.Commands;
-public record RefreshTokenRequest(UserInfoDto UserInfo) : IRequest<ItemResponse<UserInfoDto>>;
+public record RefreshTokenRequest(string refreshToken) : IRequest<ItemResponse<UserInfoDto>>;
 public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenRequest, ItemResponse<UserInfoDto>>
 {
     private readonly IUserService _userService;
@@ -28,7 +28,7 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
     {
         if (_userService.IsAuthenticated)
             return new();
-        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(request.UserInfo.RefreshToken ?? throw new ArgumentException("Data is invalid")))
+        var userToken = await _userTokenRepository.GetItemAsync(new UserTokenSpecification(request.refreshToken ?? throw new ArgumentException("Data is invalid")))
             ?? throw new UnauthorizedAccessException("Cannot access to account");
         if (userToken.EndDate > DateTime.UtcNow)
         {
@@ -38,16 +38,16 @@ public sealed class RefreshTokenRequestHandler : IRequestHandler<RefreshTokenReq
                 issuer: _config.Issuer,
                 audience: _config.Issuer,
                 claims: new List<Claim>() {
-                    new("UserName", request.UserInfo.UserName ?? string.Empty),
-                    new("Role", userToken.Account?.Permission.ToString() ?? string.Empty),
-                    new("Session", userToken.SessionId.ToString())
+                    new(Variable.Role, userToken.Account?.Permission.ToString() ?? string.Empty),
+                    new(Variable.Session, userToken.SessionId.ToString()),
+                    new(Variable.UserName, userToken.Account?.UserName ?? string.Empty)
                 },
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: signInCredentials
             );
             UserInfoDto response = new()
             {
-                UserName = request.UserInfo.UserName,
+                UserName = userToken.Account?.UserName,
                 Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions)
             };
             userToken.Token = response.Token;
