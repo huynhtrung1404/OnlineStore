@@ -1,5 +1,4 @@
 using AutoMapper;
-using OnlineStore.Application.Responses;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
 

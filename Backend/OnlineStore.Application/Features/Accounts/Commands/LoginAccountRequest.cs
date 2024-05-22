@@ -1,8 +1,4 @@
-using System.Security.Claims;
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using OnlineStore.Application.Options;
 using OnlineStore.Application.Specifications;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
