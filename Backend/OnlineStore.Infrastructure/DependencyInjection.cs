@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped(typeof(IOnlineStoreRepository<>), typeof(OnlineStoreRepository<>));
         services.AddTransient<IDateTimeService, DateTimeService>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddTransient<ITokenService, TokenService>();
         return services;
     }
 }
