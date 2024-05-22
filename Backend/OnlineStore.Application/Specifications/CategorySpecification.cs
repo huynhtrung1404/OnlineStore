@@ -14,4 +14,8 @@ public class CategorySpecification : BaseSpecification<Category>
     {
         ApplyOrderBy(x => x.CreatedDateTime);
     }
+    public CategorySpecification(IEnumerable<Guid> categoryIds) : base(x => categoryIds.Contains(x.Id))
+    {
+
+    }
 }
