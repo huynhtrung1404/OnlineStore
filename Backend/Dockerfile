@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 COPY OnlineStore.Api/*.csproj ./OnlineStore.Api/
@@ -17,7 +17,7 @@ RUN dotnet dev-certs https --clean
 RUN dotnet dev-certs https --trust
 RUN dotnet publish -c release -o out --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /run
 COPY --from=build /source/OnlineStore.Api/out .
 COPY --from=build /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
