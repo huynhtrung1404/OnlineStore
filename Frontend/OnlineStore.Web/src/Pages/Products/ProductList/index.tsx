@@ -1,5 +1,5 @@
-const ProductList = () => {
+function ProductList() {
   return <></>;
-};
+}
 
 export default ProductList;
