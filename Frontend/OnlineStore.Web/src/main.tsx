@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import "primeflex/primeflex.min.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
