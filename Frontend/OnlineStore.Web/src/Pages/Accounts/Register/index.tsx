@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Password } from "primereact/password";
@@ -18,6 +18,7 @@ function Register() {
   const [city, setCity] = useState<string>("");
   const [province, setProvince] = useState<string>("");
   const [gender, setGender] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   return (
     <>
       <h1 className="flex align-item-center justify-content-center">
