@@ -4,8 +4,12 @@ using OnlineStore.Domain.Entities;
 namespace OnlineStore.Application.Specification;
 public class ProductSpecification : BaseSpecification<Product>
 {
-    public ProductSpecification(Guid productId) : base(x => x.Id.Equals(productId))
+    public ProductSpecification(Guid productId, bool isIncludeCategory = false) : base(x => x.Id.Equals(productId))
     {
+        if (isIncludeCategory)
+        {
+            AddInclude(x => x.Categories);
+        }
     }
 
     public ProductSpecification(string productName) : base(x => x.Name.Contains(productName))

@@ -13,7 +13,8 @@ public class ProductController : BaseController
         Ok(await Sender.Send(new GetAllProductRequest(pageSize, pageNumber)));
 
     [HttpGet("GetProductById")]
-    public async Task<IActionResult> GetProductById(Guid id) => Ok(await Sender.Send(new GetProductByIdRequest(id)));
+    public async Task<IActionResult> GetProductById(Guid id) =>
+        Ok(await Sender.Send(new GetProductByIdRequest(id)));
 
     [HttpPost("AddNewItem")]
     public async Task<IActionResult> AddNewProduct([FromBody] ProductDto product)
@@ -30,6 +31,13 @@ public class ProductController : BaseController
     public async Task<IActionResult> RemoveProduct(Guid id)
     {
         await Sender.Send(new RemoveProductRequest(id));
+        return Ok();
+    }
+
+    [HttpPost("AddCategoryToProduct")]
+    public async Task<IActionResult> AddCategoryToProduct([FromBody] CategoryToProductDto detail)
+    {
+        await Sender.Send(new AddCategoryToProductRequest(detail));
         return Ok();
     }
 }

@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: OnlineStore
-          path: /home/runner/work/OnlineStore/OnlineStore/Backend/OnlineStore.Api/bin/Release/net7.0/publish/
+          path: /home/runner/work/OnlineStore/OnlineStore/Backend/OnlineStore.Api/bin/Release/net8.0/publish/

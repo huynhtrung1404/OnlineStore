@@ -1,8 +1,4 @@
-using System.Security.Claims;
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using OnlineStore.Application.Options;
 using OnlineStore.Application.Specifications;
 using OnlineStore.Domain.Commons.Interface;
 using OnlineStore.Domain.Entities;
@@ -15,20 +11,18 @@ public record LoginAccountRequest(LoginDto Login) : IRequest<ItemResponse<UserIn
 public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountRequest, ItemResponse<UserInfoDto>>
 {
     private readonly IOnlineStoreRepository<Account> _accountRepository;
-    private readonly JwtTokenOption _config;
     private readonly IOnlineStoreRepository<UserToken> _userTokenRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ITokenService _tokenService;
     public LoginAccountRequestHandler(IOnlineStoreRepository<Account> accountRepository,
-        IConfiguration config,
-        IOnlineStoreRepository<UserToken> userTokenRepository, IMapper mapper, IUnitOfWork unitOfWork,
-        IOptionsSnapshot<JwtTokenOption> options)
+        IOnlineStoreRepository<UserToken> userTokenRepository, IMapper mapper, IUnitOfWork unitOfWork, ITokenService tokenService)
     {
         _accountRepository = accountRepository;
-        _config = options.Value;
         _userTokenRepository = userTokenRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+        _tokenService = tokenService;
     }
 
     public async Task<ItemResponse<UserInfoDto>> Handle(LoginAccountRequest request, CancellationToken cancellationToken)
@@ -37,13 +31,9 @@ public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountReq
             .GetItemAsync(new AccountSpecification(request.Login.UserName, Utilities.EncryptSHA512(request.Login.Password)));
         if (account is null)
             throw new ArgumentNullException("Account is null");
-        var session = Guid.NewGuid();
-        var listClaims = new List<Claim>() {
-                new("UserName", request.Login.UserName),
-                new("Role",account.Permission.ToString()),
-                new("Session", session.ToString())};
-        var token = TokenUtils.GenerateAccessToken(_config.Key, _config.Issuer, listClaims);
-        var refreshToken = TokenUtils.GenerateRefreshToken();
+        var currentSession = Guid.NewGuid();
+        var token = _tokenService.GenerateToken(new(request.Login.UserName, account.Permission.ToString(), currentSession));
+        var refreshToken = _tokenService.GenerateRefreshToken();
         UserInfoDto response = new()
         {
             FirstName = account.Customer?.FirstName,
@@ -53,7 +43,7 @@ public sealed class LoginAccountRequestHandler : IRequestHandler<LoginAccountReq
             RefreshToken = refreshToken
         };
         var userToken = _mapper.Map<UserToken>(response);
-        userToken.SessionId = session;
+        userToken.SessionId = currentSession;
         userToken.RefreshToken = refreshToken;
         userToken.Account = account;
         userToken.EndDate = request.Login.IsKeptLogin ? DateTime.UtcNow.AddDays(7) : DateTime.UtcNow.AddDays(1);
