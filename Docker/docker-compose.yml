@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  online-store-api:
+    ports:
+      - 6001:6001
+      - 6002:6002
+    image: online-store-api
+    build:
+      context: ../Backend
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:6001;https://+:6002
+      - ConnectionStrings:DefaultConnection=Server=local-db;Initial Catalog=OnlineStore;MultipleActiveResultSets=true;user id=sa;password=P@ssw0rd; TrustServerCertificate=True
+      - OriginUrl=http://localhost:5121
