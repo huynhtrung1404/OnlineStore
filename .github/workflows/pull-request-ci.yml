@@ -1,0 +1,42 @@
+name: Pull Request Trigger
+run-name: Run Pull Request ${{github.event.pull_request.title}}
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Setup dotnet 8
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet restore
+        name: Restore project
+      - run: dotnet build --configuration Release --no-restore
+        name: Build Project
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=${{secrets.ORG}}
+            -Dsonar.projectKey=${{secrets.PROJ_KEY}}
+
+      - run: dotnet publish --configuration Release OnlineStore.Api
+        name: Publish project OnlineStore.Api
+        working-directory: Backend
+      - name: Upload OnlineStore Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OnlineStore
+          path: /home/runner/work/OnlineStore/OnlineStore/Backend/OnlineStore.Api/bin/Release/net8.0/publish/
